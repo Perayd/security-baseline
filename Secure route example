@@ -1,0 +1,10 @@
+import express from "express";
+import { protect } from "./auth.js";
+
+const router = express.Router();
+
+router.get("/dashboard", protect, (req, res) => {
+  res.json({ message: "Secure data", userId: req.userId });
+});
+
+export default router;
