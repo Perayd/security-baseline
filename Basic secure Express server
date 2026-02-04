@@ -1,0 +1,29 @@
+import express from "express";
+import helmet from "helmet";
+import cors from "cors";
+import rateLimit from "express-rate-limit";
+import dotenv from "dotenv";
+
+dotenv.config();
+
+const app = express();
+
+// Security headers
+app.use(helmet());
+
+// JSON parsing
+app.use(express.json());
+
+// CORS (lock this down in prod)
+app.use(cors({
+  origin: "https://yourfrontend.com",
+  credentials: true
+}));
+
+// Rate limiting (anti-bruteforce / DDoS lite)
+app.use(rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100
+}));
+
+export default app;
